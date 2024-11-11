@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { useCreateCabin } from "./useCreateCabin";
 import { useEditCabin } from "./useEditCabin";
 
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const { isCreating, createCabin } = useCreateCabin();
   const { isEditing, editCabin } = useEditCabin();
   const { id: editId, ...editValues } = cabinToEdit;
@@ -25,17 +25,27 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
     if (isEditSession)
-      editCabin({
-        newCabinData: { ...data, image },
-        id: editId,
-      });
+      editCabin(
+        {
+          newCabinData: { ...data, image },
+          id: editId,
+        },
+        {
+          // eslint-disable-next-line no-unused-vars
+          onSuccess: (_data) => {
+            reset();
+            onCloseModal?.();
+          },
+        }
+      );
     else
       createCabin(
         { ...data, image: image },
         {
-          onSuccess: (data) => {
-            console.log(data);
+          // eslint-disable-next-line no-unused-vars
+          onSuccess: (_data) => {
             reset();
+            onCloseModal?.();
           },
         }
       );
@@ -54,9 +64,13 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       description: PropTypes.string,
       image: PropTypes.string,
     }),
+    onCloseModal: PropTypes.func.isRequired,
   };
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit, onError)}
+      type={onCloseModal ? "modal" : "regular"}
+    >
       <FormRow label="Cabin name" error={errors?.name?.message}>
         <Input
           type="text"
@@ -103,6 +117,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           })}
         />
       </FormRow>
+
       <FormRow label="Cabin Photo" error={errors?.image?.message}>
         <FileInput
           id="image"
@@ -115,7 +130,11 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       </FormRow>
 
       <FormRow>
-        <Button variation="secondary" type="reset">
+        <Button
+          variation="secondary"
+          type="reset"
+          onClick={() => onCloseModal?.()}
+        >
           Cancel
         </Button>
         <Button disabled={isWorking}>
