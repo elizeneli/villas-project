@@ -3,7 +3,6 @@ import Form from "../../ui/Form";
 import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import FormRow from "../../ui/FormRow";
-import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { useCreateCabin } from "./useCreateCabin";
 import { useEditCabin } from "./useEditCabin";
@@ -54,18 +53,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   function onError(errors) {
     console.log(errors);
   }
-  CreateCabinForm.propTypes = {
-    cabinToEdit: PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      maxCapacity: PropTypes.number,
-      regularPrice: PropTypes.number,
-      discount: PropTypes.number,
-      description: PropTypes.string,
-      image: PropTypes.string,
-    }),
-    onCloseModal: PropTypes.func.isRequired,
-  };
+
   return (
     <Form
       onSubmit={handleSubmit(onSubmit, onError)}
