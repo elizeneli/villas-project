@@ -1,15 +1,7 @@
 import styled from "styled-components";
-import PropTypes from "prop-types";
 import { HiXMark } from "react-icons/hi2";
 import { createPortal } from "react-dom";
-import {
-  cloneElement,
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-} from "react";
+import { cloneElement, createContext, useContext, useState } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const StyledModal = styled.div`
@@ -73,19 +65,10 @@ function Modal({ children }) {
   );
 }
 
-Modal.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
 function Open({ children, opens: opensWindowName }) {
   const { open } = useContext(ModalContext);
   return cloneElement(children, { onClick: () => open(opensWindowName) });
 }
-
-Open.propTypes = {
-  children: PropTypes.node.isRequired,
-  opens: PropTypes.string.isRequired,
-};
 
 function Window({ children, name }) {
   const { openName, close } = useContext(ModalContext);
@@ -104,11 +87,6 @@ function Window({ children, name }) {
     document.body
   );
 }
-
-Window.propTypes = {
-  children: PropTypes.node.isRequired,
-  name: PropTypes.string.isRequired,
-};
 
 Modal.Open = Open;
 Modal.Window = Window;
