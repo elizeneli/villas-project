@@ -7,7 +7,7 @@ export async function getBookings() {
     .select(
       "id, created_at, startDate, endDate, numNights, numGuests, status, totalPrice, cabins(name), guests(fullName, email)"
     );
-
+  console.log("dataaa", data);
   if (error) {
     console.error(error);
     throw new Error("Bookings could not be loaded");

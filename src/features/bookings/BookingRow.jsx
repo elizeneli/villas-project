@@ -53,7 +53,9 @@ function BookingRow({
     "checked-in": "green",
     "checked-out": "silver",
   };
-
+  console.log(bookingId, "booking");
+  console.log(guestName, "emri");
+  // console.log("Booking object:", booking);
   return (
     <Table.Row>
       <Cabin>{cabinName}</Cabin>
