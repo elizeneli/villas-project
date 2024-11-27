@@ -17,11 +17,11 @@ export function useBookings() {
 
   const {
     isLoading,
-    data: bookings,
+    data: { data: bookings, count },
     error,
   } = useQuery({
     queryKey: ["bookings", filter, sortBy], //this is like the dependency array of use effect hook, because it tells the react query to refetch the data from the filter everytime bookings its called
     queryFn: () => getBookings({ filter, sortBy }),
   });
-  return { isLoading, error, bookings };
+  return { isLoading, error, bookings, count };
 }
