@@ -1,8 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getBookings } from "../../services/apiBookings";
 import { useSearchParams } from "react-router-dom";
 
 export function useBookings() {
+  const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 
   const filterValue = searchParams.get("status");
@@ -24,5 +25,19 @@ export function useBookings() {
     queryKey: ["bookings", filter, sortBy, page], //this is like the dependency array of use effect hook, because it tells the react query to refetch the data from the filter everytime bookings its called
     queryFn: () => getBookings({ filter, sortBy, page }),
   });
+
+  //PRE-FETCHING
+
+  const pageCount = Math.ceil(count);
+  if (page < pageCount)
+    queryClient.prefetchQuery({
+      queryKey: ["bookings", filter, sortBy, page + 1], //this is like the dependency array of use effect hook, because it tells the react query to refetch the data from the filter everytime bookings its called
+      queryFn: () => getBookings({ filter, sortBy, page: page + 1 }),
+    });
+  if (page > 1)
+    queryClient.prefetchQuery({
+      queryKey: ["bookings", filter, sortBy, page - 1], //this is like the dependency array of use effect hook, because it tells the react query to refetch the data from the filter everytime bookings its called
+      queryFn: () => getBookings({ filter, sortBy, page: page + 1 }),
+    });
   return { isLoading, error, bookings, count };
 }
