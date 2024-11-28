@@ -14,14 +14,15 @@ export function useBookings() {
   const sortByRaw = searchParams.get("sortBy") || "startDate-desc";
   const [field, direction] = sortByRaw.split("-");
   const sortBy = { field, direction };
-
+  //PAGINATION
+  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
   const {
     isLoading,
-    data: { data: bookings, count },
+    data: { data: bookings, count } = {},
     error,
   } = useQuery({
-    queryKey: ["bookings", filter, sortBy], //this is like the dependency array of use effect hook, because it tells the react query to refetch the data from the filter everytime bookings its called
-    queryFn: () => getBookings({ filter, sortBy }),
+    queryKey: ["bookings", filter, sortBy, page], //this is like the dependency array of use effect hook, because it tells the react query to refetch the data from the filter everytime bookings its called
+    queryFn: () => getBookings({ filter, sortBy, page }),
   });
   return { isLoading, error, bookings, count };
 }
