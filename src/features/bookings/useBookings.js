@@ -6,6 +6,7 @@ export function useBookings() {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 
+  //Filter
   const filterValue = searchParams.get("status");
   const filter =
     !filterValue || filterValue === "all"
@@ -17,6 +18,7 @@ export function useBookings() {
   const sortBy = { field, direction };
   //PAGINATION
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+  //query
   const {
     isLoading,
     data: { data: bookings, count } = {},
@@ -37,7 +39,7 @@ export function useBookings() {
   if (page > 1)
     queryClient.prefetchQuery({
       queryKey: ["bookings", filter, sortBy, page - 1], //this is like the dependency array of use effect hook, because it tells the react query to refetch the data from the filter everytime bookings its called
-      queryFn: () => getBookings({ filter, sortBy, page: page + 1 }),
+      queryFn: () => getBookings({ filter, sortBy, page: page - 1 }),
     });
   return { isLoading, error, bookings, count };
 }
