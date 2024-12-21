@@ -19,7 +19,7 @@ export async function login({ email, password }) {
     password,
   });
   if (error) throw new Error(error.message);
-  console.log("eeasdz", data);
+
   return data;
 }
 export async function getCurrentUser() {
@@ -27,8 +27,6 @@ export async function getCurrentUser() {
   if (!session.session) return null;
 
   const { data, error } = await supabase.auth.getUser();
-
-  console.log(data);
 
   if (error) throw new Error(error.message);
   return data?.user;
@@ -40,12 +38,11 @@ export async function logout() {
 }
 
 export async function updateCurrentUser({ password, fullName, avatar }) {
-  console.log("update userrr", updateCurrentUser);
   //1. update password or fullname
   let updateData;
   if (password) updateData = { password };
   if (fullName) updateData = { data: { fullName } };
-  console.log("updatedata", updateData);
+
   const { data, error } = await supabase.auth.updateUser(updateData);
 
   if (error) throw new Error(error.message);
@@ -64,7 +61,7 @@ export async function updateCurrentUser({ password, fullName, avatar }) {
       avatar: `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`,
     },
   });
-  console.log("uppp", updatedUser);
+
   if (error2) throw new Error(error2.message);
   return updatedUser;
 }
