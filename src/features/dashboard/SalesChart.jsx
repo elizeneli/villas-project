@@ -11,11 +11,11 @@ import {
   YAxis,
 } from "recharts";
 import { useDarkMode } from "../../context/DarkModeContext";
+import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
 
 const StyledSalesChart = styled(DashboardBox)`
   grid-column: 1 / -1;
 
-  /* Hack to change grid line colors */
   & .recharts-cartesian-grid-horizontal line,
   & .recharts-cartesian-grid-vertical line {
     stroke: var(--color-grey-300);
@@ -54,9 +54,28 @@ const fakeData = [
   { label: "Feb 06", totalSales: 1450, extrasSales: 400 },
 ];
 
-function SalesChart() {
+function SalesChart({ bookings, numDays }) {
   const { isDarkMode } = useDarkMode();
 
+  const allDates = eachDayOfInterval({
+    start: subDays(new Date(), numDays - 1),
+    end: new Date(),
+  });
+  const data = allDates.map((date) => {
+    return {
+      label: format(date, "MMM dd"),
+      totalSales: bookings
+        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+        .reduce((acc, cur) => acc + cur.totalPrice, 0),
+      extrasSales: bookings
+        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+        .reduce((acc, cur) => acc + cur.extrasPrice, 0),
+    };
+  });
+  console.log("bbbbookings", bookings);
+  console.log("numDayssss", numDays);
+  console.log("allDates", allDates);
+  console.log("data", data);
   const colors = isDarkMode
     ? {
         totalSales: { stroke: "#df2323", fill: "#df2323" },
@@ -75,7 +94,7 @@ function SalesChart() {
     <StyledSalesChart>
       <Heading as="h2">Sales</Heading>
       <ResponsiveContainer height={300} width="100%">
-        <AreaChart data={fakeData}>
+        <AreaChart data={data}>
           <XAxis
             dataKey="label"
             tick={{ fill: colors.text }}
@@ -95,6 +114,15 @@ function SalesChart() {
             fill={colors.totalSales.fill}
             strokeWidth={2}
             name="Total sales"
+            unit="€"
+          />
+          <Area
+            dataKey="extrasSales"
+            type="monotone"
+            stroke={colors.extrasSales.stroke}
+            fill={colors.extrasSales.fill}
+            strokeWidth={2}
+            name="Extra sales"
             unit="€"
           />
         </AreaChart>
