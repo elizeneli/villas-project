@@ -1,10 +1,11 @@
 import { useRef, useEffect } from "react";
 
-export function useOutsideClick(handler, listenCapturing = true) {
+export function useOutsideClick(handler, listenCapturing = false) {
   const ref = useRef();
   useEffect(
     function () {
       function handleClick(e) {
+        e.stopPropagation();
         if (ref.current && !ref.current.contains(e.target)) {
           handler();
         }
