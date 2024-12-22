@@ -41,7 +41,8 @@ function BookingDetail() {
     "checked-in": "green",
     "checked-out": "silver",
   };
-
+  console.log(booking, "statusiii");
+  console.log(statusToTagName[status], "statusToTagName[status]");
   return (
     <>
       <Row type="horizontal">
