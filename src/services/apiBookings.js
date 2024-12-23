@@ -6,17 +6,29 @@ export async function createBooking(newBooking) {
   const { data, error } = await supabase
     .from("bookings")
     .insert([newBooking])
-    .select()
-    .single();
+    .select("id, guestId");
 
   if (error) {
-    console.error(error);
+    console.error(error, "Error details:");
     throw new Error("Booking could not be created");
   }
 
   return data;
 }
 
+export async function insertGuestDetails(guestDetails) {
+  const { data, error } = await supabase
+    .from("guests")
+    .insert(guestDetails)
+    .select("*")
+    .single();
+
+  if (error) {
+    console.error("Error details:", error);
+    throw new Error("Guest details could not be inserted");
+  }
+  return data;
+}
 export async function getBookings({ filter, sortBy, page }) {
   let query = supabase
     .from("bookings")
