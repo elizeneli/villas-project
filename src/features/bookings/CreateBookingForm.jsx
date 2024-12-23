@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import ReactFlagsSelect from "react-flags-select";
+
+import countryOptions from "./countryOptions";
 
 import { useCabins } from "../cabins/useCabins";
 import { useCreateBooking } from "../../features/bookings/useCreateBooking";
@@ -43,6 +46,7 @@ function CreateBookingForm({ onCloseModal }) {
   const numGuests = watch("numGuests");
   const cabinPrice = watch("cabinPrice");
   const extrasPrice = watch("extrasPrice");
+  // const nationality = watch("nationality");
 
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -75,8 +79,8 @@ function CreateBookingForm({ onCloseModal }) {
       fullName: data.fullName,
       email: data.email,
       nationalID: data.nationalId,
-      nationality: data.country,
-      countryFlag: data.flagCountry,
+      nationality: data.nationality,
+      countryFlag: data.countryFlag,
     };
     const guestData = await insertGuestDetails(guestDetails);
     const guestId = guestData.id;
@@ -99,7 +103,6 @@ function CreateBookingForm({ onCloseModal }) {
 
     if (hasBreakfast) {
       const breakfastCost = settings.breakfastPrice * bookingData.numGuests;
-      // Add this to a calculated field, not the booking payload
       bookingData.totalPrice += breakfastCost;
     }
 
@@ -128,6 +131,7 @@ function CreateBookingForm({ onCloseModal }) {
     (cabin) => !bookedCabinIds.includes(cabin.id)
   );
   console.log("Available Cabins:", availableCabins);
+
   return (
     <Form
       onSubmit={handleSubmit(onSubmit, onError)}
@@ -159,21 +163,17 @@ function CreateBookingForm({ onCloseModal }) {
             {...register("nationalId", { required: "This field is required" })}
           />
         </FormRow>
-        <FormRow label="Country" error={errors?.country?.message}>
-          <Input
-            type="text"
-            id="country"
-            disabled={isInserting}
-            {...register("country", { required: "This field is required" })}
-          />
-        </FormRow>
-        <FormRow label="Flag Country" error={errors?.flagCountry?.message}>
-          <Input
-            type="text"
-            id="flagCountry"
-            disabled={isInserting}
-            {...register("flagCountry", { required: "This field is required" })}
-          />
+        <FormRow label="Nationality" error={errors?.country?.message}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <ReactFlagsSelect
+              selected={watch("country")}
+              onSelect={(code) => {
+                setValue("country", code); // Set country value
+                setValue("countryFlag", code); // Sync flag with country
+              }}
+              countries={countryOptions.map((country) => country.value)}
+            />
+          </div>
         </FormRow>
       </Section>
 
@@ -289,7 +289,7 @@ function CreateBookingForm({ onCloseModal }) {
         </FormRow>
       </Section>
 
-      <FormRow>
+      <FormRow isFlexRow>
         <Button
           variation="secondary"
           type="reset"

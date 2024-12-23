@@ -20,7 +20,7 @@ const StyledFormRow = styled.div`
     border-bottom: 1px solid var(--color-grey-100);
   }
 
-  &:has(button) {
+  &.flex-row {
     display: flex;
     justify-content: flex-end;
     gap: 1.2rem;
@@ -35,9 +35,9 @@ const Error = styled.span`
   font-size: 1.4rem;
   color: var(--color-red-700);
 `;
-function FormRow({ label, error, children }) {
+function FormRow({ label, error, children, isFlexRow = false }) {
   return (
-    <StyledFormRow>
+    <StyledFormRow className={isFlexRow ? "flex-row" : ""}>
       {label && <Label htmlFor={children.props.id}>{label}</Label>}
       {children}
       {error && <Error>{error}</Error>}
