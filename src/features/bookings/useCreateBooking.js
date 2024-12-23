@@ -9,7 +9,7 @@ export function useCreateBooking() {
     mutationFn: createBookingAPI,
     onSuccess: (data) => {
       console.log(data.id, "4545");
-      toast.success(`Booking #${data.id} successfully createdddd`);
+      // toast.success(`Booking #${data.id} successfully createdddd`);
       queryClient.invalidateQueries("bookings");
     },
     onError: (error) => {

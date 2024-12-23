@@ -14,10 +14,11 @@ const StyledModal = styled.div`
   box-shadow: var(--shadow-lg);
   padding: 3.2rem 4rem;
   transition: all 0.5s;
-  max-height: 90vh; /* Ensure the modal does not exceed 90% of the viewport height */
-  overflow: auto; /* Make the content scrollable if it exceeds the modal's height */
+  max-height: 90vh;
+  overflow: auto;
   display: flex;
   flex-direction: column;
+  z-index: 1001;
 `;
 
 const Overlay = styled.div`
@@ -30,7 +31,6 @@ const Overlay = styled.div`
   backdrop-filter: blur(4px);
   z-index: 1000;
   transition: all 0.5s;
-  /* overflow: scroll; */
 `;
 
 const Button = styled.button`
