@@ -55,6 +55,7 @@ const Button = styled.button`
 
   ${(props) => sizes[props.size]}
   ${(props) => variations[props.$variations]}
+  white-space: nowrap;
 `;
 
 Button.defaultProps = {
