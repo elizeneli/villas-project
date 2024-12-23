@@ -80,7 +80,7 @@ function SignupForm() {
         />
       </FormRow>
 
-      <FormRow>
+      <FormRow isFlexRow>
         <Button variation="secondary" type="reset">
           Cancel
         </Button>

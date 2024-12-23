@@ -168,8 +168,8 @@ function CreateBookingForm({ onCloseModal }) {
             <ReactFlagsSelect
               selected={watch("country")}
               onSelect={(code) => {
-                setValue("country", code); // Set country value
-                setValue("countryFlag", code); // Sync flag with country
+                setValue("country", code);
+                setValue("countryFlag", code);
               }}
               countries={countryOptions.map((country) => country.value)}
             />
@@ -192,6 +192,7 @@ function CreateBookingForm({ onCloseModal }) {
           <Input
             type="date"
             id="endDate"
+            min={today}
             disabled={isCreating}
             {...register("endDate", { required: "This field is required" })}
           />
