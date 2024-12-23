@@ -58,7 +58,7 @@ function UpdateUserDataForm() {
           disabled={isUpdating}
         />
       </FormRow>
-      <FormRow>
+      <FormRow isFlexRow>
         <Button
           type="reset"
           variation="secondary"
