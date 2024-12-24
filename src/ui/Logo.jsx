@@ -3,7 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 const StyledLogo = styled.div`
   text-align: center;
-  cursor: pointer; // Add cursor pointer to indicate it's clickable
+  cursor: pointer;
+`;
+
+const LogoText = styled.h1`
+  font-family: "Dancing Script", cursive;
+  font-size: 2rem;
+  color: var(--color-green-700);
 `;
 
 function Logo() {
@@ -11,7 +17,8 @@ function Logo() {
 
   return (
     <StyledLogo onClick={() => navigate("/")}>
-      <img src="/main-logo1.png" alt="Logo" />
+      <img src="/logoo.png" alt="Logo" />
+      <LogoText>Mountain Villas</LogoText>
     </StyledLogo>
   );
 }
