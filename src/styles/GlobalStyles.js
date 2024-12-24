@@ -2,16 +2,16 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 :root {
-  /* Indigo */
-  --color-brand-50:rgb(243, 228, 228);
-  --color-brand-100:rgb(235, 140, 140);
-  --color-brand-200:rgb(248, 111, 111);
-  --color-brand-500:rgb(251, 90, 90);
-  --color-brand-600: #e14445;
-  --color-brand-700:rgb(213, 48, 48);
-  --color-brand-800:rgb(186, 47, 47);
-  --color-brand-900:rgb(202, 24, 24);
-&.light-mode{
+
+--color-brand-50: rgb(228, 243, 228);
+  --color-brand-100: rgb(244, 254, 244);
+  --color-brand-200: rgb(126, 218, 126);
+  --color-brand-500: rgb(47, 199, 47);
+  --color-brand-600:rgb(56, 142, 56);
+  --color-brand-700: rgb(9, 103, 9);
+  --color-brand-800: rgb(3, 68, 3);
+  --color-brand-900: rgb(2, 41, 2);
+&.light-mode {
 
 
   /* Grey */
@@ -27,8 +27,8 @@ const GlobalStyles = createGlobalStyle`
   --color-grey-800: #1f2937;
   --color-grey-900: #111827;
 
-  --color-blue-100: #e0f2fe;
-  --color-blue-700: #0369a1;
+  --color-blue-100:rgb(250, 255, 153);
+  --color-blue-700:rgb(3, 80, 2);
   --color-green-100: #dcfce7;
   --color-green-700: #15803d;
   --color-yellow-100: #fef9c3;
@@ -39,7 +39,7 @@ const GlobalStyles = createGlobalStyle`
   --color-indigo-700: #4338ca;
 
   --color-red-100: #fee2e2;
-  --color-red-700: #b91c1c;
+  --color-red-700:rgb(6, 80, 17);
   --color-red-800: #991b1b;
 
   --backdrop-color: rgba(255, 255, 255, 0.1);
@@ -61,8 +61,8 @@ const GlobalStyles = createGlobalStyle`
 --color-grey-800: #f3f4f6;
 --color-grey-900: #f9fafb;
 
---color-blue-100: #075985;
---color-blue-700: #e0f2fe;
+--color-blue-100:rgb(250, 255, 153);
+--color-blue-700:rgb(3, 80, 2);
 --color-green-100: #166534;
 --color-green-700: #dcfce7;
 --color-yellow-100: #854d0e;
@@ -73,8 +73,8 @@ const GlobalStyles = createGlobalStyle`
 --color-indigo-700: #e0e7ff;
 
 --color-red-100: #fee2e2;
---color-red-700: #b91c1c;
---color-red-800: #991b1b;
+--color-red-700:rgb(27, 79, 29);
+--color-red-800:rgb(13, 56, 18);
 
 --backdrop-color: rgba(0, 0, 0, 0.3);
 

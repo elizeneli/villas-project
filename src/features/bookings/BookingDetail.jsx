@@ -37,7 +37,7 @@ function BookingDetail() {
   const { status, id: bookingId } = booking;
   console.log("test", booking);
   const statusToTagName = {
-    unconfirmed: "blue",
+    unconfirmed: "yellow",
     "checked-in": "green",
     "checked-out": "silver",
   };
